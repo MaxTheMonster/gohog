@@ -19,10 +19,10 @@ func main() {
   var endpoint string
   flag.StringVar(&endpoint, "endpoint", endpointDefault, "Endpoint to generate traffic to")
   posthogKey := os.Getenv("POSTHOG_KEY") 
-  numbEvents := flag.Int("events", 1000, "Total number of events to spawn")
+  numbEvents := flag.Int("events", 10000, "Total number of events to spawn")
   funnelDepth := flag.Int("funnel-depth", 10, "Max depth of funnel")
   userCount := flag.Int("users", 10000, "user pool to draw from")
-  sleepTime := flag.Int("sleep", 50, "ms to sleep between events")
+  sleepTime := flag.Int("sleep", 25, "ms to sleep between events")
   flag.Parse()
  
   log.Println("~~~~~~~Beginning burn in test~~~~~~~") 
@@ -39,7 +39,7 @@ func main() {
   defer client.Close()
 
   t := 0
-  for i := 0; i <= *numbEvents; i++ {
+  for t <= *numbEvents {
     s := rand.Intn(*funnelDepth)
     userid := rand.Intn(*userCount)
     user := fmt.Sprintf("user-%d", userid)  
