@@ -27,14 +27,12 @@ var (
 
 // runOneEventPipeline Enqueues one Event pipeline. Used for benchmarking
 func runOneEventPipeline(n int, config posthog.Config, client posthog.Client) {
-	var j int
 	s := rand.Intn(funnelDepth)
 	userid := rand.Intn(userCount)
 	user := fmt.Sprintf("user-%d", userid)
 	plan := "Enterprise"
 	friends := rand.Intn(42)
 	for i := 0; i <= s; i++ {
-		j++
 		step := fmt.Sprintf("step-%d", i)
 		client.Enqueue(posthog.Capture{
 			DistinctId: user,
